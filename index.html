@@ -494,9 +494,9 @@
         let isResponseGenerating = false;
 
         // API configuration
-        // The API_KEY is intentionally left empty; Canvas will inject it at runtime.
+        // The API_KEY is intentionally left empty; Canvas will automatically provide it at runtime.
         const API_KEY = "";
-        // Updated to use gemini-2.0-flash as per instructions
+        // Using gemini-2.0-flash for text generation
         const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
         // Load theme and chat data from local storage on page load
@@ -588,7 +588,7 @@
         // Show a loading animation while waiting for the API response
         const showLoadingAnimation = () => {
             const html = `<div class="message-content">
-                            <img class="avatar" src="https://placehold.co/40x40/000/fff?text=AI" alt="Gemini avatar">
+                            <img class="avatar" src="https://placehold.co/40x40/000/fff?text=AI" alt="AI avatar">
                             <p class="text"></p>
                             <div class="loading-indicator">
                                 <div class="loading-bar"></div>
@@ -609,15 +609,7 @@
         const copyMessage = (copyButton) => {
             const messageText = copyButton.parentElement.querySelector(".text").innerText;
 
-            document.execCommand('copy'); // Fallback for navigator.clipboard.writeText
-            // navigator.clipboard.writeText(messageText).then(() => { // Using navigator.clipboard.writeText for modern browsers
-            //     copyButton.innerText = "done"; // Show confirmation icon
-            //     setTimeout(() => copyButton.innerText = "content_copy", 1000); // Revert icon after 1 second
-            // }).catch(err => {
-            //     console.error('Failed to copy text: ', err);
-            // });
-
-            // For compatibility in iframe environments
+            // For compatibility in iframe environments, use document.execCommand('copy')
             const textarea = document.createElement('textarea');
             textarea.value = messageText;
             document.body.appendChild(textarea);
@@ -712,4 +704,3 @@
     </script>
 </body>
 </html>
-
